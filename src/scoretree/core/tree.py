@@ -171,22 +171,7 @@ class ScoreTree(Formatter):
         """
         return "\n".join(
             self.colorize(
-                (
-                    f"{Style.BRIGHT}{level.name.title()}"
-                    + f" ({level.weight * 100:.2f}%):"
-                    + f" {level.score * 100:.2f}%\n"
-                    + f"\n".join(
-                        item._render()
-                        for item in level.items
-                    ) + Style.RESET_ALL
-                ) if Formatter.COLOR_ENABLED else (
-                    f"{level.name.title()} ({level.weight * 100:.2f}%):"
-                    + f" {level.score * 100:.2f}%\n"
-                    + f"\n".join(
-                        item._render()
-                        for item in level.items
-                    )
-                ), level.score
-            )
-            for level in self.items
+                f"{item._render(0)}{Style.RESET_ALL}",
+                item.score
+            ) for item in self.items
         )
