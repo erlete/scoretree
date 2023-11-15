@@ -6,15 +6,50 @@ from .scores import Score, ScoreArea
 
 class ScoreTree(Formatter):
 
-    def __init__(self, levels: list[ScoreArea]):
+    def __init__(self, levels: list[Score | ScoreArea]) -> None:
+        """Initialize a ScoreTree instance.
+
+        Args:
+            levels (list[Score | ScoreArea]): list of Score or ScoreArea items.
+        """
         self.levels = levels
 
     @property
-    def levels(self):
+    def levels(self) -> list[Score | ScoreArea]:
+        """Get score levels.
+
+        Returns:
+            list[Score | ScoreArea]: score levels.
+        """
         return self._levels
 
     @levels.setter
-    def levels(self, value):
+    def levels(self, value: list[Score | ScoreArea]) -> None:
+        """Set score levels.
+
+        Raises:
+            TypeError: if value is not a list.
+            TypeError: if value contains elements that are not Score or
+                ScoreArea instances.
+
+        Args:
+            value (list[Score | ScoreArea]): score levels.
+        """
+        if not isinstance(value, list):
+            raise TypeError(
+                "expected type list[Score | ScoreArea] for"
+                + f" {self.__class__.__name__}.levels but got"
+                + f" {type(value).__name__} instead"
+            )
+
+        if not all(isinstance(item, (Score, ScoreArea)) for item in value):
+            raise TypeError(
+                "expected type list[Score | ScoreArea] for"
+                + f" {self.__class__.__name__}.levels elements but got"
+                + f" {type(value).__name__} instead"
+            )
+
+        # Weight completeness checking:
         for area in value:
             self.check_weights(area)
 
