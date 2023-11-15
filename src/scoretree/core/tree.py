@@ -1,3 +1,13 @@
+"""Score tree module.
+
+This module contains the ScoreTree class, which is used to generate a score
+tree from a list of Score and/or ScoreArea instances.
+
+Author:
+    Paulo Sanchez (@erlete)
+"""
+
+
 from colorama import Style
 
 from .formatter import Formatter

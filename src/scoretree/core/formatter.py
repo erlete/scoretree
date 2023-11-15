@@ -1,3 +1,13 @@
+"""Formatting module.
+
+This module contains several text formatting utilities for indentation and
+colorization.
+
+Author:
+    Paulo Sanchez (@erlete)
+"""
+
+
 from colorama import Fore, init
 
 init()

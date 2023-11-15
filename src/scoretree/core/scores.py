@@ -1,3 +1,17 @@
+"""Score classes module.
+
+This module contains the Score and ScoreArea classes, which are used to
+represent a score and a score area, respectively. The Score class is the
+smallest score unit, containing a name, a weight for ponderation, a score range
+that defines the evaluation range and a value. The ScoreArea class is a score
+area, which contains a name, a weight for ponderation and a list of scores or
+score areas.
+
+Author:
+    Paulo Sanchez (@erlete)
+"""
+
+
 from __future__ import annotations
 
 from colorama import Style
