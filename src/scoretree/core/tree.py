@@ -8,6 +8,8 @@ Author:
 """
 
 
+from __future__ import annotations
+
 from colorama import Style
 
 from .formatter import Formatter
@@ -18,38 +20,38 @@ class ScoreTree(Formatter):
     """Score tree generation class.
 
     This class serves as interface for score tree generation. By providing the
-    levels attribute with a list of Score and/or ScoreArea instances (last ones
+    items attribute with a list of Score and/or ScoreArea instances (last ones
     being nestable), all dependent scores will be computed and displayed with
     ease.
 
     Attributes:
-        levels (list[Score | ScoreArea]): list of Score or ScoreArea items.
+        items (list[Score | ScoreArea]): list of Score or ScoreArea items.
         score (float): weighted score.
     """
 
-    def __init__(self, levels: list[Score | ScoreArea]) -> None:
+    def __init__(self, items: list[Score | ScoreArea]) -> None:
         """Initialize a ScoreTree instance.
 
         Args:
-            levels (list[Score | ScoreArea]): list of Score or ScoreArea items.
+            items (list[Score | ScoreArea]): list of Score or ScoreArea items.
         """
-        self.levels = levels
+        self.items = items
 
     @property
-    def levels(self) -> list[Score | ScoreArea]:
-        """Get score levels.
+    def items(self) -> list[Score | ScoreArea]:
+        """Get score items.
 
         Returns:
-            list[Score | ScoreArea]: score levels.
+            list[Score | ScoreArea]: score items.
         """
-        return self._levels
+        return self._items
 
-    @levels.setter
-    def levels(self, value: list[Score | ScoreArea]) -> None:
-        """Set score levels.
+    @items.setter
+    def items(self, value: list[Score | ScoreArea]) -> None:
+        """Set score items.
 
         Args:
-            value (list[Score | ScoreArea]): score levels.
+            value (list[Score | ScoreArea]): score items.
 
         Raises:
             TypeError: if value is not a list.
@@ -59,22 +61,21 @@ class ScoreTree(Formatter):
         if not isinstance(value, list):
             raise TypeError(
                 "expected type list[Score | ScoreArea] for"
-                + f" {self.__class__.__name__}.levels but got"
+                + f" {self.__class__.__name__}.items but got"
                 + f" {type(value).__name__} instead"
             )
 
         if not all(isinstance(item, (Score, ScoreArea)) for item in value):
             raise TypeError(
                 "expected type list[Score | ScoreArea] for"
-                + f" {self.__class__.__name__}.levels elements but got"
+                + f" {self.__class__.__name__}.items elements but got"
                 + f" {type(value).__name__} instead"
             )
 
-        # Weight completeness checking:
-        for area in value:
-            self.check_weights(area)
+        self._items = value
 
-        self._levels = value
+        # Weight completeness self-checking:
+        self.check_weights(self)
 
     @property
     def score(self) -> float:
@@ -83,30 +84,39 @@ class ScoreTree(Formatter):
         Returns:
             float: weighted score.
         """
-        return sum(level.score * level.weight for level in self.levels)
+        return sum(level.score * level.weight for level in self.items)
 
     @classmethod
-    def check_weights(cls, area: ScoreArea) -> None:
-        """Check if weights of a ScoreArea add up to 1.
+    def check_weights(cls, score_collection: ScoreArea | ScoreTree) -> None:
+        """Check if weights of a ScoreArea or ScoreTree add up to 1.
 
         Args:
-            area (ScoreArea): ScoreArea to check.
+            score_collection (ScoreArea | ScoreTree): score area or score tree
+                to check.
 
         Raises:
             ValueError: if weights do not add up to 1.
         """
         # Accumulation:
         total = 0
-        for item in area.items:
+        for item in score_collection.items:
             total += item.weight
 
             # Recursive checking:
             if isinstance(item, ScoreArea):
                 cls.check_weights(item)
 
-        if total != 1:
+        # Score area checking:
+        if total != 1 and isinstance(score_collection, ScoreArea):
             raise ValueError(
-                f"\"{area.name}\" score weights do not add up to 1 ({total})"
+                f"\"{score_collection.name}\""
+                + f" score weights do not add up to 1 ({total})"
+            )
+
+        # Score tree checking:
+        elif total != 1 and isinstance(score_collection, ScoreTree):
+            raise ValueError(
+                f"score tree weights do not add up to 1 ({total})"
             )
 
     def __repr__(self) -> str:
@@ -115,7 +125,7 @@ class ScoreTree(Formatter):
         Returns:
             str: short string representation of the score tree.
         """
-        return f"<ScoreTree with {len(self.levels)} levels>"
+        return f"<ScoreTree with {len(self.items)} items>"
 
     def __str__(self) -> str:
         """Get long representation of the score tree.
@@ -134,5 +144,5 @@ class ScoreTree(Formatter):
                 ) + Style.RESET_ALL,
                 level.score
             )
-            for level in self.levels
+            for level in self.items
         )
