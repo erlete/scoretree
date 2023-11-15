@@ -20,7 +20,7 @@ class Score(Formatter):
         Args:
             name (str): score name.
             weight (int | float): score weight.
-            score_range (tuple[int  |  float, int  |  float]): score range from
+            score_range (tuple[int | float, int | float]): score range from
                 minimum to maximum.
             value (int | float, optional): current value. Defaults to 0.
             inverse (bool, optional): whether to invert the score calculation
@@ -47,6 +47,9 @@ class Score(Formatter):
     def name(self, value: str) -> None:
         """Set score name.
 
+        Raises:
+            TypeError: if value is not a string.
+
         Args:
             value (str): score name.
         """
@@ -60,17 +63,20 @@ class Score(Formatter):
         self._name = value
 
     @property
-    def weight(self) -> int | float:
+    def weight(self) -> float:
         """Get score weight.
 
         Returns:
-            int | float: score weight.
+            float: score weight.
         """
         return self._weight
 
     @weight.setter
     def weight(self, value: int | float) -> None:
         """Set score weight.
+
+        Raises:
+            TypeError: if value is not an int or float.
 
         Args:
             value (int | float): score weight.
@@ -82,20 +88,25 @@ class Score(Formatter):
                 + f" {type(value).__name__} instead"
             )
 
-        self._weight = value
+        self._weight = float(value)
 
     @property
-    def score_range(self) -> tuple[int | float, int | float]:
+    def score_range(self) -> tuple[float, float]:
         """Get score range.
 
         Returns:
-            tuple[int | float, int | float]: score range.
+            tuple[float, float]: score range.
         """
         return self._score_range
 
     @score_range.setter
     def score_range(self, value: tuple[int | float, int | float]) -> None:
         """Set score range.
+
+        Raises:
+            TypeError: if value is not a tuple.
+            TypeError: if value elements are not int or float.
+            ValueError: if value length is not 2.
 
         Args:
             value (tuple[int | float, int | float]): score range.
@@ -114,20 +125,30 @@ class Score(Formatter):
                 + f" {type(value).__name__} instead"
             )
 
-        self._score_range = value
+        if not len(value) == 2:
+            raise ValueError(
+                "expected length 2 for"
+                + f" {self.__class__.__name__}.score_range but got"
+                + f" {len(value)} instead"
+            )
+
+        self._score_range = (float(value[0]), float(value[1]))
 
     @property
-    def value(self) -> int | float:
+    def value(self) -> float:
         """Get current value.
 
         Returns:
-            int | float: current value.
+            float: current value.
         """
         return self._value
 
     @value.setter
     def value(self, value: int | float) -> None:
         """Set current value.
+
+        Raises:
+            TypeError: if value is not an int or float.
 
         Args:
             value (int | float): current value.
@@ -139,7 +160,7 @@ class Score(Formatter):
                 + f" {type(value).__name__} instead"
             )
 
-        self._value = value
+        self._value = float(value)
 
     @property
     def inverse(self) -> bool:
@@ -153,6 +174,9 @@ class Score(Formatter):
     @inverse.setter
     def inverse(self, value: bool) -> None:
         """Set inverse operation flag.
+
+        Raises:
+            TypeError: if value is not a bool.
 
         Args:
             value (bool): inverse operation flag.
