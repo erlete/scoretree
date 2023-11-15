@@ -1,0 +1,10 @@
+# Package requirements:
+matplotlib
+numpy
+# Testing and linting:
+pytest
+pytest-cov
+pycodestyle
+pydocstyle
+mypy
+flake8
