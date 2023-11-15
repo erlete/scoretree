@@ -257,42 +257,119 @@ class Score(Formatter):
 
 class ScoreArea(Formatter):
 
-    def __init__(self, name: str, weight: float, scores: list[Score | Area]):
+    def __init__(
+        self,
+        name: str,
+        weight: int | float,
+        items: list[Score | ScoreArea]
+    ) -> None:
+        """Initialize a ScoreArea instance.
+
+        Args:
+            name (str): score area name.
+            weight (int | float): score area weight.
+            items (list[Score | ScoreArea]): score area items (can either be
+                Score or ScoreArea instances).
+        """
         self.name = name
         self.weight = weight
-        self.scores = scores
+        self.items = items
 
         self._compute_score()
-        # self._computed = randrange(0, 100) / 100
 
     @property
-    def name(self):
+    def name(self) -> str:
+        """Get score area name.
+
+        Returns:
+            str: score area name.
+        """
         return self._name
 
     @name.setter
-    def name(self, value):
+    def name(self, value: str) -> None:
+        """Set score area name.
+
+        Raises:
+            TypeError: if value is not a string.
+
+        Args:
+            value (str): score area name.
+        """
+        if not isinstance(value, str):
+            raise TypeError(
+                "expected type str for"
+                + f" {self.__class__.__name__}.name but got"
+                + f" {type(value).__name__} instead"
+            )
+
         self._name = value
 
     @property
-    def weight(self):
+    def weight(self) -> float:
+        """Get score area weight.
+
+        Returns:
+            float: score area weight.
+        """
         return self._weight
 
     @weight.setter
-    def weight(self, value):
-        self._weight = value
+    def weight(self, value: int | float) -> None:
+        """Set score area weight.
+
+        Args:
+            value (int | float): score area weight.
+        """
+        if not isinstance(value, (int, float)):
+            raise TypeError(
+                "expected type int | float for"
+                + f" {self.__class__.__name__}.weight but got"
+                + f" {type(value).__name__} instead"
+            )
+
+        self._weight = float(value)
 
     @property
-    def scores(self):
-        return self._scores
+    def items(self) -> list[Score | ScoreArea]:
+        """Get score area items.
 
-    @scores.setter
-    def scores(self, value):
-        self._scores = value
+        Returns:
+            list[Score | ScoreArea]: score area items.
+        """
+        return self._items
+
+    @items.setter
+    def items(self, value: list[Score | ScoreArea]) -> None:
+        """Set score area items.
+
+        Raises:
+            TypeError: if value is not a list.
+            TypeError: if value elements are not Score or ScoreArea instances.
+
+        Args:
+            value (list[Score | ScoreArea]): score area items.
+        """
+        if not isinstance(value, list):
+            raise TypeError(
+                "expected type list[Score | ScoreArea] for"
+                + f" {self.__class__.__name__}.items but got"
+                + f" {type(value).__name__} instead"
+            )
+
+        if not all(isinstance(item, (Score, ScoreArea)) for item in value):
+            raise TypeError(
+                "expected type Score | ScoreArea for"
+                + f" {self.__class__.__name__}.items elements but got"
+                + f" {type(value).__name__} instead"
+            )
+
+        self._items = value
 
     def _compute_score(self):
         self._computed = sum(
             item._computed * item._weight
-            for item in self.scores
+            for item in self.items
         )
 
     def __repr__(self):
@@ -304,7 +381,7 @@ class ScoreArea(Formatter):
             + f"{self.indent(indent)}{self.name.title()} ({self.weight * 100:.2f}%): {self._computed * 100:.2f}%\n"
             + f"\n".join(
                 item._render(indent + 1)
-                for item in self.scores
+                for item in self.items
             ),
             self._computed
         )

@@ -23,7 +23,7 @@ class ScoreTree(Formatter):
     @classmethod
     def check_weights(cls, area):
         total = 0
-        for item in area.scores:
+        for item in area.items:
             total += item.weight
 
             if isinstance(item, ScoreArea):
@@ -44,7 +44,7 @@ class ScoreTree(Formatter):
                 + f"{level.name.title()} ({level.weight * 100:.2f}%): {level._computed * 100:.2f}%\n"
                 + f"\n".join(
                     item._render()
-                    for item in level.scores
+                    for item in level.items
                 )
                 + Style.RESET_ALL,
                 level._computed
