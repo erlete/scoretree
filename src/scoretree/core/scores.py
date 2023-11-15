@@ -179,15 +179,29 @@ class Score(Formatter):
             max(self._computed, self._score_range[0])
         )
 
-    def __repr__(self):
-        return f"Score({self.name}, {self.weight})"
-
     def render(self, indent=1):
         return self.colorize(
-            Style.DIM
-            + self.indent(indent)
-            + f"{self.name.title()} ({self.weight * 100:.2f}%): {self._computed * 100:.2f}%",
+            f"{Style.DIM}{self.indent(indent)}{self!s}",
             self._computed
+        )
+
+    def __repr__(self) -> str:
+        """Get short representation of the score.
+
+        Returns:
+            str: short representation of the score.
+        """
+        return f"Score({self.name})"
+
+    def __str__(self) -> str:
+        """Get long representation of the score.
+
+        Returns:
+            str: long representation of the score.
+        """
+        return (
+            f"{self.name.title()} ({self.weight * 100:.2f}%):"
+            + f" {self._computed * 100:.2f}%"
         )
 
 
