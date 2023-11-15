@@ -372,9 +372,6 @@ class ScoreArea(Formatter):
             for item in self.items
         )
 
-    def __repr__(self):
-        return f"ScoreArea({self.name}, {self.weight})"
-
     def _render(self, indent=1):
         return self.colorize(
             Style.NORMAL
@@ -384,4 +381,24 @@ class ScoreArea(Formatter):
                 for item in self.items
             ),
             self._computed
+        )
+
+    def __repr__(self) -> str:
+        """Get short representation of the score area.
+
+        Returns:
+            str: short representation of the score area.
+        """
+        return f"ScoreArea({self.name})"
+
+    def __str__(self) -> str:
+        """Get long representation of the score area.
+
+        Returns:
+            str: long representation of the score area.
+        """
+        return (
+            f"{self.name.title()} ({self.weight * 100:.2f}%):"
+            + f" {self._computed * 100:.2f}%\n"
+            + "\n".join(f"{' ' * 4}{item!s}" for item in self.items)
         )
