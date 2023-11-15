@@ -264,6 +264,18 @@ class Score(Formatter):
 
 
 class ScoreArea(Formatter):
+    """Score area representation unit.
+
+    The score area represents a set of scores or child score areas that can be
+    used to group scores by level or category. It contains a name, a weight for
+    ponderation and a list of scores or score areas.
+
+    Attributes:
+        name (str): score area name.
+        weight (float): score area weight.
+        items (list[Score | ScoreArea]): score area items (can either be
+            Score or ScoreArea instances).
+    """
 
     def __init__(
         self,
@@ -374,7 +386,8 @@ class ScoreArea(Formatter):
 
         self._items = value
 
-    def _compute_score(self):
+    def _compute_score(self) -> None:
+        """Compute score area value from current weight and item scores."""
         self._computed = sum(
             item._computed * item._weight
             for item in self.items
