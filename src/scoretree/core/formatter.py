@@ -62,7 +62,7 @@ class Formatter:
         Returns:
             str: colorized text.
         """
-        if not isinstance(string, str):
+        if not isinstance(text, str):
             raise TypeError("text must be a string.")
 
         if not isinstance(value, (int, float)):
@@ -75,4 +75,4 @@ class Formatter:
             value < .5: Fore.RED,
             .5 <= value <= .75: Fore.YELLOW,
             .75 < value: Fore.GREEN
-        }[True] + string
+        }[True] + text
