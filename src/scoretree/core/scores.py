@@ -6,6 +6,24 @@ from .formatter import Formatter
 
 
 class Score(Formatter):
+    """Minimal score representation unit.
+
+    This class represents the smallest score unit, which contains a name, a
+    weight for ponderation, a score range that defines the evaluation range and
+    a value. Furthermore, the computation can be inverted, for example, if the
+    score range is from 0 to 10, a value of 10 will be 0 and a value of 0 will
+    be 1. This is useful for scores that are better when lower, like distance
+    to end.
+
+    Attributes:
+        name (str): score name.
+        weight (float): score weight.
+        score_range (tuple[float, float]): score range from
+            minimum to maximum.
+        value (float, optional): current value. Defaults to 0.
+        inverse (bool, optional): whether to invert the score calculation
+            process. Defaults to False.
+    """
 
     def __init__(
         self,
@@ -190,7 +208,9 @@ class Score(Formatter):
 
         self._inverse = value
 
-    def _compute_score(self):
+    def _compute_score(self) -> None:
+        """Compute score value from current value, weight and score range."""
+        # Compute score and invert it, if specified:
         self._computed = abs(self._inverse - (
             min(
                 self._value - self._score_range[0],
@@ -198,12 +218,18 @@ class Score(Formatter):
             ) / (self._score_range[1] - self._score_range[0])
         ))
 
-        self._computed = min(
-            self._score_range[1],
-            max(self._computed, self._score_range[0])
-        )
+        # Normalize score:
+        self._computed = min(1, max(self._computed, 0))
 
-    def render(self, indent=1):
+    def _render(self, indent: int = 1) -> str:
+        """Render formatted score.
+
+        Args:
+            indent (int, optional): indentation level. Defaults to 1.
+
+        Returns:
+            str: formatted score.
+        """
         return self.colorize(
             f"{Style.DIM}{self.indent(indent)}{self!s}",
             self._computed
@@ -272,12 +298,12 @@ class Area(Formatter):
     def __repr__(self):
         return f"Area({self.name}, {self.weight})"
 
-    def render(self, indent=1):
+    def _render(self, indent=1):
         return self.colorize(
             Style.NORMAL
             + f"{self.indent(indent)}{self.name.title()} ({self.weight * 100:.2f}%): {self._computed * 100:.2f}%\n"
             + f"\n".join(
-                item.render(indent + 1)
+                item._render(indent + 1)
                 for item in self.scores
             ),
             self._computed
