@@ -1,12 +1,12 @@
 from colorama import Style
 
 from .formatter import Formatter
-from .scores import Area, Score
+from .scores import Score, ScoreArea
 
 
 class ScoreTree(Formatter):
 
-    def __init__(self, levels: list[Area]):
+    def __init__(self, levels: list[ScoreArea]):
         self.levels = levels
 
     @property
@@ -26,7 +26,7 @@ class ScoreTree(Formatter):
         for item in area.scores:
             total += item.weight
 
-            if isinstance(item, Area):
+            if isinstance(item, ScoreArea):
                 cls.check_weights(item)
 
         if total != 1:
@@ -43,7 +43,7 @@ class ScoreTree(Formatter):
                 Style.BRIGHT
                 + f"{level.name.title()} ({level.weight * 100:.2f}%): {level._computed * 100:.2f}%\n"
                 + f"\n".join(
-                    item.render()
+                    item._render()
                     for item in level.scores
                 )
                 + Style.RESET_ALL,

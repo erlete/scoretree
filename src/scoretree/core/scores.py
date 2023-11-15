@@ -255,7 +255,7 @@ class Score(Formatter):
         )
 
 
-class Area(Formatter):
+class ScoreArea(Formatter):
 
     def __init__(self, name: str, weight: float, scores: list[Score | Area]):
         self.name = name
@@ -296,7 +296,7 @@ class Area(Formatter):
         )
 
     def __repr__(self):
-        return f"Area({self.name}, {self.weight})"
+        return f"ScoreArea({self.name}, {self.weight})"
 
     def _render(self, indent=1):
         return self.colorize(
