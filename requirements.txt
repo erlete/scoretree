@@ -1,6 +1,5 @@
 # Package requirements:
-matplotlib
-numpy
+colorama
 # Testing and linting:
 pytest
 pytest-cov

@@ -1,8 +1,7 @@
 [build-system]
 requires = [
     "setuptools",
-    "matplotlib>=3.8.1",
-    "numpy>=1.26.2"
+    "colorama"
 ]
 build-backend = "setuptools.build_meta"
 
