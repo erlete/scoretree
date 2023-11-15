@@ -27,15 +27,22 @@ class ScoreTree(Formatter):
     Attributes:
         items (list[Score | ScoreArea]): list of Score or ScoreArea items.
         score (float): weighted score.
+        colorized (bool): whether colorization is enabled or not.
     """
 
-    def __init__(self, items: list[Score | ScoreArea]) -> None:
+    def __init__(
+        self,
+        items: list[Score | ScoreArea],
+        colorized: bool = True
+    ) -> None:
         """Initialize a ScoreTree instance.
 
         Args:
             items (list[Score | ScoreArea]): list of Score or ScoreArea items.
+            colorized (bool, optional): whether colorization is enabled or not.
         """
         self.items = items
+        self.colorized = colorized
 
     @property
     def items(self) -> list[Score | ScoreArea]:
@@ -78,6 +85,35 @@ class ScoreTree(Formatter):
         self.check_weights(self)
 
     @property
+    def colorized(self) -> bool:
+        """Get colorization flag.
+
+        Returns:
+            bool: colorization flag.
+        """
+        return self._colorized
+
+    @colorized.setter
+    def colorized(self, value: bool) -> None:
+        """Set colorization flag.
+
+        Args:
+            value (bool): colorization flag.
+
+        Raises:
+            TypeError: if value is not a bool.
+        """
+        if not isinstance(value, bool):
+            raise TypeError(
+                "expected type bool for"
+                + f" {self.__class__.__name__}.colorized but got"
+                + f" {type(value).__name__} instead"
+            )
+
+        self._colorized = value
+        Formatter.COLOR_ENABLED = value
+
+    @property
     def score(self) -> float:
         """Get weighted score.
 
@@ -98,7 +134,7 @@ class ScoreTree(Formatter):
             ValueError: if weights do not add up to 1.
         """
         # Accumulation:
-        total = 0
+        total = 0.0
         for item in score_collection.items:
             total += item.weight
 
@@ -135,14 +171,22 @@ class ScoreTree(Formatter):
         """
         return "\n".join(
             self.colorize(
-                f"{Style.BRIGHT}{level.name.title()}"
-                + f" ({level.weight * 100:.2f}%):"
-                + f" {level.score * 100:.2f}%\n"
-                + f"\n".join(
-                    item._render()
-                    for item in level.items
-                ) + Style.RESET_ALL,
-                level.score
+                (
+                    f"{Style.BRIGHT}{level.name.title()}"
+                    + f" ({level.weight * 100:.2f}%):"
+                    + f" {level.score * 100:.2f}%\n"
+                    + f"\n".join(
+                        item._render()
+                        for item in level.items
+                    ) + Style.RESET_ALL
+                ) if Formatter.COLOR_ENABLED else (
+                    f"{level.name.title()} ({level.weight * 100:.2f}%):"
+                    + f" {level.score * 100:.2f}%\n"
+                    + f"\n".join(
+                        item._render()
+                        for item in level.items
+                    )
+                ), level.score
             )
             for level in self.items
         )

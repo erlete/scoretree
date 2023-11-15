@@ -22,10 +22,12 @@ class Formatter:
     Attributes:
         START_CHAR (str): character used to indicate start of a new line.
         MIDDLE_CHAR (str): character used to indicate continuation of a line.
+        COLOR_ENABLED (bool): whether colorization is enabled or not.
     """
 
     START_CHAR = "└"
     MIDDLE_CHAR = "─"
+    COLOR_ENABLED = True
 
     @classmethod
     def indent(cls, count: int = 1) -> str:
@@ -79,7 +81,7 @@ class Formatter:
 
         value = min(1, max(0, value))  # Value normalization.
 
-        return {
+        return text if not cls.COLOR_ENABLED else {
             value < .5: Fore.RED,
             .5 <= value <= .75: Fore.YELLOW,
             .75 < value: Fore.GREEN

@@ -254,7 +254,8 @@ class Score(Formatter):
         indent = max(0, indent)  # Value normalization.
 
         return self.colorize(
-            f"{Style.DIM}{self.indent(indent)}{self!s}",
+            f"{Style.DIM}{self.indent(indent)}{self!s}"
+            if Formatter.COLOR_ENABLED else f"{self.indent(indent)}{self!s}",
             self.score
         )
 
@@ -430,14 +431,22 @@ class ScoreArea(Formatter):
         indent = max(0, indent)  # Value normalization.
 
         return self.colorize(
-            Style.NORMAL
-            + f"{self.indent(indent)}{self.name.title()}"
-            + f" ({self.weight * 100:.2f}%): {self.score * 100:.2f}%\n"
-            + f"\n".join(
-                item._render(indent + 1)
-                for item in self.items
-            ),
-            self.score
+            (
+                Style.NORMAL
+                + f"{self.indent(indent)}{self.name.title()}"
+                + f" ({self.weight * 100:.2f}%): {self.score * 100:.2f}%\n"
+                + f"\n".join(
+                    item._render(indent + 1)
+                    for item in self.items
+                )
+            ) if Formatter.COLOR_ENABLED else (
+                f"{self.indent(indent)}{self.name.title()}"
+                + f" ({self.weight * 100:.2f}%): {self.score * 100:.2f}%\n"
+                + f"\n".join(
+                    item._render(indent + 1)
+                    for item in self.items
+                )
+            ), self.score
         )
 
     def __repr__(self) -> str:
