@@ -37,6 +37,7 @@ class Score(Formatter):
         value (float, optional): current value. Defaults to 0.
         inverse (bool, optional): whether to invert the score calculation
             process. Defaults to False.
+        score (float): score.
     """
 
     def __init__(
@@ -63,8 +64,6 @@ class Score(Formatter):
         self.score_range = score_range
         self.value = value
         self.inverse = inverse
-
-        self._compute_score()
 
     @property
     def name(self) -> str:
@@ -222,18 +221,20 @@ class Score(Formatter):
 
         self._inverse = value
 
-    def _compute_score(self) -> None:
-        """Compute score value from current value, weight and score range."""
-        # Compute score and invert it, if specified:
-        self._computed = abs(self._inverse - (
-            min(
+    @property
+    def score(self) -> float:
+        """Get score.
+
+        Returns:
+            float: score.
+        """
+        # Compute score, invert it (if specified) and normalize it:
+        return min(1, max(abs(
+            self._inverse - (min(
                 self._value - self._score_range[0],
                 self._score_range[1] - self._score_range[0]
-            ) / (self._score_range[1] - self._score_range[0])
-        ))
-
-        # Normalize score:
-        self._computed = min(1, max(self._computed, 0))
+            ) / (self._score_range[1] - self._score_range[0]))
+        ), 0))
 
     def _render(self, indent: int = 1) -> str:
         """Render formatted score.
@@ -254,7 +255,7 @@ class Score(Formatter):
 
         return self.colorize(
             f"{Style.DIM}{self.indent(indent)}{self!s}",
-            self._computed
+            self.score
         )
 
     def __repr__(self) -> str:
@@ -273,7 +274,7 @@ class Score(Formatter):
         """
         return (
             f"{self.name.title()} ({self.weight * 100:.2f}%):"
-            + f" {self._computed * 100:.2f}%"
+            + f" {self.score * 100:.2f}%"
         )
 
 
@@ -289,6 +290,7 @@ class ScoreArea(Formatter):
         weight (float): score area weight.
         items (list[Score | ScoreArea]): score area items (can either be
             Score or ScoreArea instances).
+        score (float): weighted score.
     """
 
     def __init__(
@@ -308,8 +310,6 @@ class ScoreArea(Formatter):
         self.name = name
         self.weight = weight
         self.items = items
-
-        self._compute_score()
 
     @property
     def name(self) -> str:
@@ -403,12 +403,14 @@ class ScoreArea(Formatter):
 
         self._items = value
 
-    def _compute_score(self) -> None:
-        """Compute score area value from current weight and item scores."""
-        self._computed = sum(
-            item._computed * item._weight
-            for item in self.items
-        )
+    @property
+    def score(self) -> float:
+        """Get weighted score.
+
+        Returns:
+            float: weighted score.
+        """
+        return sum(item.score * item._weight for item in self.items)
 
     def _render(self, indent: int = 1) -> str:
         """Render formatted score area.
@@ -430,12 +432,12 @@ class ScoreArea(Formatter):
         return self.colorize(
             Style.NORMAL
             + f"{self.indent(indent)}{self.name.title()}"
-            + f" ({self.weight * 100:.2f}%): {self._computed * 100:.2f}%\n"
+            + f" ({self.weight * 100:.2f}%): {self.score * 100:.2f}%\n"
             + f"\n".join(
                 item._render(indent + 1)
                 for item in self.items
             ),
-            self._computed
+            self.score
         )
 
     def __repr__(self) -> str:
@@ -454,6 +456,6 @@ class ScoreArea(Formatter):
         """
         return (
             f"{self.name.title()} ({self.weight * 100:.2f}%):"
-            + f" {self._computed * 100:.2f}%\n"
+            + f" {self.score * 100:.2f}%\n"
             + "\n".join(f"{' ' * 4}{item!s}" for item in self.items)
         )

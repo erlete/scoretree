@@ -24,6 +24,7 @@ class ScoreTree(Formatter):
 
     Attributes:
         levels (list[Score | ScoreArea]): list of Score or ScoreArea items.
+        score (float): weighted score.
     """
 
     def __init__(self, levels: list[Score | ScoreArea]) -> None:
@@ -75,6 +76,15 @@ class ScoreTree(Formatter):
 
         self._levels = value
 
+    @property
+    def score(self) -> float:
+        """Get weighted score.
+
+        Returns:
+            float: weighted score.
+        """
+        return sum(level.score * level.weight for level in self.levels)
+
     @classmethod
     def check_weights(cls, area: ScoreArea) -> None:
         """Check if weights of a ScoreArea add up to 1.
@@ -117,12 +127,12 @@ class ScoreTree(Formatter):
             self.colorize(
                 f"{Style.BRIGHT}{level.name.title()}"
                 + f" ({level.weight * 100:.2f}%):"
-                + f"{level._computed * 100:.2f}%\n"
+                + f" {level.score * 100:.2f}%\n"
                 + f"\n".join(
                     item._render()
                     for item in level.items
                 ) + Style.RESET_ALL,
-                level._computed
+                level.score
             )
             for level in self.levels
         )
