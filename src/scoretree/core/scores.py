@@ -227,9 +227,17 @@ class Score(Formatter):
         Args:
             indent (int, optional): indentation level. Defaults to 1.
 
+        Raises:
+            TypeError: if indent is not an integer.
+
         Returns:
             str: formatted score.
         """
+        if not isinstance(indent, int):
+            raise TypeError("indent must be an integer")
+
+        indent = max(0, indent)  # Value normalization.
+
         return self.colorize(
             f"{Style.DIM}{self.indent(indent)}{self!s}",
             self._computed
@@ -372,10 +380,27 @@ class ScoreArea(Formatter):
             for item in self.items
         )
 
-    def _render(self, indent=1):
+    def _render(self, indent: int = 1) -> str:
+        """Render formatted score area.
+
+        Args:
+            indent (int, optional): indentation level. Defaults to 1.
+
+        Raises:
+            TypeError: if indent is not an integer.
+
+        Returns:
+            str: formatted score area.
+        """
+        if not isinstance(indent, int):
+            raise TypeError("indent must be an integer")
+
+        indent = max(0, indent)  # Value normalization.
+
         return self.colorize(
             Style.NORMAL
-            + f"{self.indent(indent)}{self.name.title()} ({self.weight * 100:.2f}%): {self._computed * 100:.2f}%\n"
+            + f"{self.indent(indent)}{self.name.title()}"
+            + f" ({self.weight * 100:.2f}%): {self._computed * 100:.2f}%\n"
             + f"\n".join(
                 item._render(indent + 1)
                 for item in self.items
