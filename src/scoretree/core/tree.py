@@ -5,6 +5,16 @@ from .scores import Score, ScoreArea
 
 
 class ScoreTree(Formatter):
+    """Score tree generation class.
+
+    This class serves as interface for score tree generation. By providing the
+    levels attribute with a list of Score and/or ScoreArea instances (last ones
+    being nestable), all dependent scores will be computed and displayed with
+    ease.
+
+    Attributes:
+        levels (list[Score | ScoreArea]): list of Score or ScoreArea items.
+    """
 
     def __init__(self, levels: list[Score | ScoreArea]) -> None:
         """Initialize a ScoreTree instance.
@@ -56,11 +66,21 @@ class ScoreTree(Formatter):
         self._levels = value
 
     @classmethod
-    def check_weights(cls, area):
+    def check_weights(cls, area: ScoreArea) -> None:
+        """Check if weights of a ScoreArea add up to 1.
+
+        Args:
+            area (ScoreArea): ScoreArea to check.
+
+        Raises:
+            ValueError: if weights do not add up to 1.
+        """
+        # Accumulation:
         total = 0
         for item in area.items:
             total += item.weight
 
+            # Recursive checking:
             if isinstance(item, ScoreArea):
                 cls.check_weights(item)
 
@@ -69,19 +89,29 @@ class ScoreTree(Formatter):
                 f"\"{area.name}\" score weights do not add up to 1 ({total})"
             )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
+        """Get short string representation of the score tree.
+
+        Returns:
+            str: short string representation of the score tree.
+        """
         return f"<ScoreTree with {len(self.levels)} levels>"
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """Get long representation of the score tree.
+
+        Returns:
+            str: long representation of the score tree.
+        """
         return "\n".join(
             self.colorize(
-                Style.BRIGHT
-                + f"{level.name.title()} ({level.weight * 100:.2f}%): {level._computed * 100:.2f}%\n"
+                f"{Style.BRIGHT}{level.name.title()}"
+                + f" ({level.weight * 100:.2f}%):"
+                + f"{level._computed * 100:.2f}%\n"
                 + f"\n".join(
                     item._render()
                     for item in level.items
-                )
-                + Style.RESET_ALL,
+                ) + Style.RESET_ALL,
                 level._computed
             )
             for level in self.levels
