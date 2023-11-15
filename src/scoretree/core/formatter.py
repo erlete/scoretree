@@ -57,7 +57,6 @@ class Formatter:
         Raises:
             TypeError: if text is not a string.
             TypeError: if value is not an integer or float.
-            ValueError: if value is not between 0 and 1.
 
         Returns:
             str: colorized text.
@@ -68,8 +67,7 @@ class Formatter:
         if not isinstance(value, (int, float)):
             raise TypeError("value must be an integer or float.")
 
-        if not 0 <= value <= 1:
-            raise ValueError("value must be between 0 and 1.")
+        value = min(1, max(0, value))  # Value normalization.
 
         return {
             value < .5: Fore.RED,
