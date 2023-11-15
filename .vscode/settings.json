@@ -1,0 +1,9 @@
+{
+    "python.testing.pytestArgs": [
+        "--cov=src/scoretree", "--cov-report=xml:coverage.xml",
+        "--verbose", "-s", "--color=yes", "src/scoretree/tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "explorer.excludeGitIgnore": true
+}
