@@ -37,13 +37,13 @@ class ScoreTree(Formatter):
     def levels(self, value: list[Score | ScoreArea]) -> None:
         """Set score levels.
 
+        Args:
+            value (list[Score | ScoreArea]): score levels.
+
         Raises:
             TypeError: if value is not a list.
             TypeError: if value contains elements that are not Score or
                 ScoreArea instances.
-
-        Args:
-            value (list[Score | ScoreArea]): score levels.
         """
         if not isinstance(value, list):
             raise TypeError(

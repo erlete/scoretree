@@ -24,11 +24,11 @@ class Formatter:
         Args:
             count (int, optional): number of indents. Defaults to 1.
 
-        Raises:
-            TypeError: if count is not an integer.
-
         Returns:
             str: indented string.
+
+        Raises:
+            TypeError: if count is not an integer.
         """
         if not isinstance(count, int):
             raise TypeError("count must be an integer.")
@@ -54,12 +54,12 @@ class Formatter:
             value (int | float): value to base colorization from 0 to 1 (both
                 included).
 
+        Returns:
+            str: colorized text.
+
         Raises:
             TypeError: if text is not a string.
             TypeError: if value is not an integer or float.
-
-        Returns:
-            str: colorized text.
         """
         if not isinstance(text, str):
             raise TypeError("text must be a string.")

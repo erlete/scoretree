@@ -65,11 +65,11 @@ class Score(Formatter):
     def name(self, value: str) -> None:
         """Set score name.
 
-        Raises:
-            TypeError: if value is not a string.
-
         Args:
             value (str): score name.
+
+        Raises:
+            TypeError: if value is not a string.
         """
         if not isinstance(value, str):
             raise TypeError(
@@ -93,11 +93,11 @@ class Score(Formatter):
     def weight(self, value: int | float) -> None:
         """Set score weight.
 
-        Raises:
-            TypeError: if value is not an int or float.
-
         Args:
             value (int | float): score weight.
+
+        Raises:
+            TypeError: if value is not an int or float.
         """
         if not isinstance(value, (int, float)):
             raise TypeError(
@@ -121,13 +121,13 @@ class Score(Formatter):
     def score_range(self, value: tuple[int | float, int | float]) -> None:
         """Set score range.
 
+        Args:
+            value (tuple[int | float, int | float]): score range.
+
         Raises:
             TypeError: if value is not a tuple.
             TypeError: if value elements are not int or float.
             ValueError: if value length is not 2.
-
-        Args:
-            value (tuple[int | float, int | float]): score range.
         """
         if not isinstance(value, tuple):
             raise TypeError(
@@ -165,11 +165,11 @@ class Score(Formatter):
     def value(self, value: int | float) -> None:
         """Set current value.
 
-        Raises:
-            TypeError: if value is not an int or float.
-
         Args:
             value (int | float): current value.
+
+        Raises:
+            TypeError: if value is not an int or float.
         """
         if not isinstance(value, (int, float)):
             raise TypeError(
@@ -193,11 +193,11 @@ class Score(Formatter):
     def inverse(self, value: bool) -> None:
         """Set inverse operation flag.
 
-        Raises:
-            TypeError: if value is not a bool.
-
         Args:
             value (bool): inverse operation flag.
+
+        Raises:
+            TypeError: if value is not a bool.
         """
         if not isinstance(value, bool):
             raise TypeError(
@@ -227,11 +227,11 @@ class Score(Formatter):
         Args:
             indent (int, optional): indentation level. Defaults to 1.
 
-        Raises:
-            TypeError: if indent is not an integer.
-
         Returns:
             str: formatted score.
+
+        Raises:
+            TypeError: if indent is not an integer.
         """
         if not isinstance(indent, int):
             raise TypeError("indent must be an integer")
@@ -310,11 +310,11 @@ class ScoreArea(Formatter):
     def name(self, value: str) -> None:
         """Set score area name.
 
-        Raises:
-            TypeError: if value is not a string.
-
         Args:
             value (str): score area name.
+
+        Raises:
+            TypeError: if value is not a string.
         """
         if not isinstance(value, str):
             raise TypeError(
@@ -340,6 +340,9 @@ class ScoreArea(Formatter):
 
         Args:
             value (int | float): score area weight.
+
+        Raises:
+            TypeError: if value is not an int or float.
         """
         if not isinstance(value, (int, float)):
             raise TypeError(
@@ -363,12 +366,12 @@ class ScoreArea(Formatter):
     def items(self, value: list[Score | ScoreArea]) -> None:
         """Set score area items.
 
+        Args:
+            value (list[Score | ScoreArea]): score area items.
+
         Raises:
             TypeError: if value is not a list.
             TypeError: if value elements are not Score or ScoreArea instances.
-
-        Args:
-            value (list[Score | ScoreArea]): score area items.
         """
         if not isinstance(value, list):
             raise TypeError(
@@ -399,11 +402,11 @@ class ScoreArea(Formatter):
         Args:
             indent (int, optional): indentation level. Defaults to 1.
 
-        Raises:
-            TypeError: if indent is not an integer.
-
         Returns:
             str: formatted score area.
+
+        Raises:
+            TypeError: if indent is not an integer.
         """
         if not isinstance(indent, int):
             raise TypeError("indent must be an integer")
