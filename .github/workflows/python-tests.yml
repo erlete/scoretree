@@ -77,6 +77,10 @@ jobs:
           name: coverage
           path: coverage.lcov
 
+      - name: REMOVEME
+        run: |
+          ls -lrt
+
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v2.2.3
         with:
