@@ -75,18 +75,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: coverage
-          path: coverage.lcov
-
-      - name: REMOVEME
-        run: |
-          ls -lrt
 
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v2.2.3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          file: coverage.lcov
+          file: coverage/coverage.lcov
           format: lcov
           flag-name: unit
           fail-on-error: false
-          debug: true
