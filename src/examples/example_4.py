@@ -10,7 +10,7 @@ Author:
 from scoretree import Score, ScoreArea, ScoreTree
 
 data = {
-    "track 1": {
+    "Track 1": {
         "top_speed": 88.2,
         "elapsed_time": 31.2,
         "traveled_distance": 327.12,
@@ -18,7 +18,7 @@ data = {
         "battery_consumption": 6,
         "regenerative_braking": 8.16
     },
-    "track 2": {
+    "Track 2": {
         "top_speed": 72.32,
         "elapsed_time": 26.2,
         "traveled_distance": 295.12,
@@ -26,7 +26,7 @@ data = {
         "battery_consumption": 4.5,
         "regenerative_braking": 6.12
     },
-    "track 3": {
+    "Track 3": {
         "top_speed": 92.12,
         "elapsed_time": 28.2,
         "traveled_distance": 315.12,
@@ -37,9 +37,9 @@ data = {
 }
 
 track_weights = {
-    "track 1": 0.3,
-    "track 2": 0.5,
-    "track 3": 0.2
+    "Track 1": 0.3,
+    "Track 2": 0.5,
+    "Track 3": 0.2
 }
 
 st = ScoreTree([

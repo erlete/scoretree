@@ -163,6 +163,13 @@ class Score(Formatter):
                 + f" {len(value)} instead"
             )
 
+        if not value[0] < value[1]:
+            raise ValueError(
+                "expected first element to be less than second element for"
+                + f" {self.__class__.__name__}.score_range but got"
+                + f" {value[0]} >= {value[1]} instead"
+            )
+
         self._score_range = (float(value[0]), float(value[1]))
 
     @property
@@ -274,8 +281,7 @@ class Score(Formatter):
             str: long representation of the score.
         """
         return (
-            f"{self.name.title()} ({self.weight * 100:.2f}%):"
-            + f" {self.score * 100:.2f}%"
+            f"{self.name} ({self.weight * 100:.2f}%): {self.score * 100:.2f}%"
         )
 
 
@@ -433,14 +439,14 @@ class ScoreArea(Formatter):
         return self.colorize(
             (
                 Style.NORMAL
-                + f"{self.indent(indent)}{self.name.title()}"
+                + f"{self.indent(indent)}{self.name}"
                 + f" ({self.weight * 100:.2f}%): {self.score * 100:.2f}%\n"
                 + "\n".join(
                     item._render(indent + 1)
                     for item in self.items
                 )
             ) if Formatter.COLOR_ENABLED else (
-                f"{self.indent(indent)}{self.name.title()}"
+                f"{self.indent(indent)}{self.name}"
                 + f" ({self.weight * 100:.2f}%): {self.score * 100:.2f}%\n"
                 + "\n".join(
                     item._render(indent + 1)
@@ -464,7 +470,7 @@ class ScoreArea(Formatter):
             str: long representation of the score area.
         """
         return (
-            f"{self.name.title()} ({self.weight * 100:.2f}%):"
+            f"{self.name} ({self.weight * 100:.2f}%):"
             + f" {self.score * 100:.2f}%\n"
             + "\n".join(f"{' ' * 4}{item!s}" for item in self.items)
         )
