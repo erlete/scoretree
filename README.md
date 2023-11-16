@@ -2,15 +2,18 @@
 
 [![PyPI Release](https://github.com/erlete/scoretree/actions/workflows/python-publish.yml/badge.svg)](https://github.com/erlete/scoretree/actions/workflows/python-publish.yml) [![Package Build and Test](https://github.com/erlete/scoretree/actions/workflows/python-tests.yml/badge.svg)](https://github.com/erlete/scoretree/actions/workflows/python-tests.yml) [![Coverage Status](https://coveralls.io/repos/github/erlete/scoretree/badge.svg?branch=stable)](https://coveralls.io/github/erlete/scoretree?branch=stable) ![Python Version](https://img.shields.io/badge/Python%20Version-3.10-blue)
 
-ScoreTree is an **easy to use**, **multi-level** grade weighting system that serves as excellent tool for cascade grading methods.
+**ScoreTree is an *easy to use*, *multi-level* grade weighting system that serves as excellent tool for cascade grading methods.**
 
 ## Installation
 
-This package [has been released through PyPI](https://pypi.org/project/scoretree/) and thus, can be installed using Python's `pip` module:
+This package [has been released through PyPI](https://pypi.org/project/scoretree/), so it can be installed using Python's `pip` module:
 
 ```shell
-python -m pip install --upgrade scoretree
+python -m pip install scoretree
 ```
+
+> [!NOTE]
+> The command above asumes that your Python interpreter is aliased to `python` and references a version equal to or greater than 3.10
 
 Alternatively, it is also possible to clone this repository and install the package via `pip` and/or `build`.
 
