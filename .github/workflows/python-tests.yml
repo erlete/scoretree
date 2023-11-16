@@ -50,6 +50,20 @@ jobs:
 
     - name: Test with PyTest
       run: |
-        if [ -d tests ]; then
-          python -m pytest src/scoretree/tests
+        if [ -d src/scoretree/tests ]; then
+          python -m pytest --cov=src/scoretree/core --cov-report=lcov --color=yes --capture=no --verbosity=3 src/scoretree/tests
         fi
+
+  upload-coverage:
+
+    runs-on: ubuntu-latest
+    needs: run-tests
+    if: github.ref == 'refs/heads/stable'
+
+    steps:
+
+      - name: Coveralls GitHub Action
+        uses: coverallsapp/github-action@v2.2.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: coverage.lcov
