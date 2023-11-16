@@ -1,8 +1,6 @@
 [build-system]
 requires = [
-    "setuptools",
-    "colorama==0.4.6",
-    "types-colorama==0.4.15.12"
+    "setuptools"
 ]
 build-backend = "setuptools.build_meta"
 
@@ -24,6 +22,21 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Operating System :: OS Independent"
+]
+
+dependencies = [
+    "colorama==0.4.6",
+    "types-colorama==0.4.15.12"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest==7.4.3",
+    "pytest-cov==4.1.0",
+    "pycodestyle==2.11.1",
+    "pydocstyle==6.3.0",
+    "mypy==1.7.0",
+    "flake8==6.1.0"
 ]
 
 [project.urls]
