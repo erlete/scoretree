@@ -75,6 +75,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: coverage
+          path: coverage
+
+      - name: removeme
+        run: |
+          ls -la coverage
+          cat coverage/coverage.lcov
 
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v2.2.3
