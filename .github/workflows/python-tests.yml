@@ -81,3 +81,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           file: coverage.lcov
+          format: lcov
+          flag-name: unit
+          fail-on-error: false
+          debug: true
