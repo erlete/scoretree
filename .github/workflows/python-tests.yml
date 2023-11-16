@@ -49,10 +49,7 @@ jobs:
     steps:
 
     - name: Test with PyTest
-      run: |
-        if [ -d src/scoretree/tests ]; then
-          python -m pytest --cov=src/scoretree/core --cov-report=lcov --color=yes --capture=no --verbosity=3 src/scoretree/tests
-        fi
+      run: python -m pytest --cov=src/scoretree/core --cov-report=lcov --color=yes --capture=no --verbosity=3 src/scoretree/tests
 
   upload-coverage:
 
