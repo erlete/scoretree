@@ -1,6 +1,6 @@
 # ScoreTree
 
-[![PyPI release](https://github.com/erlete/scoretree/actions/workflows/python-publish.yml/badge.svg)](https://github.com/erlete/scoretree/actions/workflows/python-publish.yml) [![Python Test Execution](https://github.com/erlete/scoretree/actions/workflows/python-tests.yml/badge.svg)](https://github.com/erlete/scoretree/actions/workflows/python-tests.yml) ![Python version](https://img.shields.io/badge/Python%20Version-3.10-blue)
+[![PyPI release](https://github.com/erlete/scoretree/actions/workflows/python-publish.yml/badge.svg)](https://github.com/erlete/scoretree/actions/workflows/python-publish.yml) [![Python Test Execution](https://github.com/erlete/scoretree/actions/workflows/python-tests.yml/badge.svg)](https://github.com/erlete/scoretree/actions/workflows/python-tests.yml) [![Coverage Status](https://coveralls.io/repos/github/erlete/scoretree/badge.svg?branch=stable)](https://coveralls.io/github/erlete/scoretree?branch=stable) ![Python version](https://img.shields.io/badge/Python%20Version-3.10-blue)
 
 ScoreTree is an **easy to use**, **multi-level** grade weighting system that serves as excellent tool for cascade grading methods.
 
