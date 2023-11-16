@@ -163,6 +163,13 @@ class Score(Formatter):
                 + f" {len(value)} instead"
             )
 
+        if not value[0] < value[1]:
+            raise ValueError(
+                "expected first element to be less than second element for"
+                + f" {self.__class__.__name__}.score_range but got"
+                + f" {value[0]} >= {value[1]} instead"
+            )
+
         self._score_range = (float(value[0]), float(value[1]))
 
     @property

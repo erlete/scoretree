@@ -7,10 +7,10 @@ from ..core.scores import Score, ScoreArea
 class TestScore:
 
     def test_init(self):
-        Score("", 0, (0, 0))
-        Score("", 0, (0, 0), 0)
-        Score("", 0, (0, 0), 0)
-        Score("", 0, (0, 0), 0, False)
+        Score("", 0, (0, 1))
+        Score("", 0, (0, 1), 0)
+        Score("", 0, (0, 1), 0)
+        Score("", 0, (0, 1), 0, False)
 
     def test_properties(self):
         score = Score("test", 0, (0, 1))
@@ -52,6 +52,10 @@ class TestScore:
             score.score_range = ()
             score.score_range = (0,)
             score.score_range = (0, 0, 0)
+
+        with pytest.raises(ValueError):
+            score.score_range = (0, 0)
+            score.score_range = (1, 0)
 
         score.value = 1
         score.value = 1.0
