@@ -1,0 +1,28 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+		{
+			"label": "Start local server with coverage report",
+			"type": "shell",
+			"command": "php -S localhost:${input:localServerPort} -t htmlcov",
+			"detail": "Serve code coverage report on localhost",
+			"presentation": {
+				"echo": false,
+				"reveal": "silent",
+				"focus": true,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": []
+		}
+    ],
+    "inputs": [
+		{
+			"type": "promptString",
+			"id": "localServerPort",
+			"description": "On which port should the local server run?",
+			"default": "8888"
+		}
+	]
+}

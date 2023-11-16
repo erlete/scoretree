@@ -47,6 +47,9 @@ class Formatter:
 
         count = max(0, count)  # Value normalization.
 
+        if count == 0:
+            return ""
+
         if count == 1:
             return (
                 f"{cls.START_CHAR}{cls.MIDDLE_CHAR * 2} "
