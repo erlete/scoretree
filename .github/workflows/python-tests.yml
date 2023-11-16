@@ -1,4 +1,4 @@
-name: Python Test Execution
+name: Package Build and Test
 
 on:
   push:
