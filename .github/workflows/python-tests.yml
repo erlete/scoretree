@@ -58,30 +58,12 @@ jobs:
     - name: Test with PyTest
       run: python -m pytest --cov=src/scoretree/core --cov-report=lcov --color=yes --capture=no --verbosity=3 src/scoretree/tests
 
-    - name: Upload coverage file artifact
-      uses: actions/upload-artifact@v3
+    - name: Coveralls GitHub Action
+      uses: coverallsapp/github-action@v2.2.3
       with:
-        name: coverage
-        path: coverage.lcov
-
-  upload-coverage:
-
-    runs-on: ubuntu-latest
-    needs: test
-
-    steps:
-
-      - name: Download coverage file artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: coverage
-
-      - name: Coveralls GitHub Action
-        uses: coverallsapp/github-action@v2.2.3
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          file: coverage.lcov
-          format: lcov
-          flag-name: unit
-          fail-on-error: false
-          debug: true
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        file: coverage.lcov
+        format: lcov
+        flag-name: unit
+        fail-on-error: false
+        debug: true
