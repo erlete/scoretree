@@ -16,7 +16,7 @@ class TestScoreTree:
         score_tree = ScoreTree([score])
 
         assert score_tree.items == [score]
-        assert score_tree.colorized == True
+        assert score_tree.colorized
 
         score_tree.items = [Score("test", 1, (0, 1))]
         score_tree.items = [

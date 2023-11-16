@@ -19,7 +19,7 @@ class TestScore:
         assert score.weight == 0
         assert score.score_range == (0, 1)
         assert score.value == 0
-        assert score.inverse == False
+        assert not score.inverse
 
         score.name = "test2"
         with pytest.raises(TypeError):

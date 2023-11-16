@@ -435,14 +435,14 @@ class ScoreArea(Formatter):
                 Style.NORMAL
                 + f"{self.indent(indent)}{self.name.title()}"
                 + f" ({self.weight * 100:.2f}%): {self.score * 100:.2f}%\n"
-                + f"\n".join(
+                + "\n".join(
                     item._render(indent + 1)
                     for item in self.items
                 )
             ) if Formatter.COLOR_ENABLED else (
                 f"{self.indent(indent)}{self.name.title()}"
                 + f" ({self.weight * 100:.2f}%): {self.score * 100:.2f}%\n"
-                + f"\n".join(
+                + "\n".join(
                     item._render(indent + 1)
                     for item in self.items
                 )
