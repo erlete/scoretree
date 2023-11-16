@@ -1,5 +1,6 @@
 # Package requirements:
 colorama
+types-colorama
 # Testing and linting:
 pytest
 pytest-cov

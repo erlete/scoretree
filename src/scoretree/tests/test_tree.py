@@ -81,8 +81,8 @@ class TestScoreTree:
 
     def test_representation(self):
         score_tree = ScoreTree([
-            Score("test", 0.5, (0, 1)),
-            Score("test2", 0.5, (0, 1), .5)
+            Score("Test", 0.5, (0, 1)),
+            Score("Test2", 0.5, (0, 1), .5)
         ])
 
         assert repr(score_tree) == "<ScoreTree with 2 items>"
