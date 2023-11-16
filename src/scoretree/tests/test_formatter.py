@@ -7,6 +7,7 @@ from ..core.formatter import Formatter
 class TestFormatter:
 
     def test_indent(self):
+        assert 1 == 2
         with pytest.raises(TypeError):
             Formatter.indent(1.1)
             Formatter.indent("1")
