@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "scoretree"
-version = "1.0.0"
+version = "1.1.0"
 description = "Easy to use, multi-level grade weighting system"
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -33,6 +33,7 @@ dependencies = [
 test = [
     "pytest==7.4.3",
     "pytest-cov==4.1.0",
+    "pytest-html==4.1.1",
     "pycodestyle==2.11.1",
     "pydocstyle==6.3.0",
     "mypy==1.7.0",
@@ -42,3 +43,23 @@ test = [
 [project.urls]
 "Homepage" = "https://github.com/erlete/scoretree"
 "Bug Tracker" = "https://github.com/erlete/scoretree/issues"
+
+[tool.pytest.ini_options]
+testpaths = [
+    "src/scoretree"
+]
+console_output_style = "progress"
+log_level = 0
+log_cli = true
+addopts = [
+    "--color=yes",
+    "--capture=no",
+    "--cov-config=.coveragerc",
+    "--cov-report=html",
+    "--cov=src/scoretree"
+]
+minversion = "7.4.2"
+required_plugins = [
+    "pytest-cov",
+    "pytest-html"
+]

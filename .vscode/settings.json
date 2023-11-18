@@ -4,14 +4,5 @@
     "python.testing.autoTestDiscoverOnSaveEnabled": true,
     "testExplorer.onStart": "reset",
     "testExplorer.onReload": "retire",
-    "python.testing.pytestArgs": [
-        "--cov=src/scoretree/core",
-        "--cov-report=html",
-        "--color=yes",
-        "--capture=no",
-        "--verbosity=3",
-        "--cov-append",
-        "src/scoretree"
-    ],
     "explorer.excludeGitIgnore": true
 }
