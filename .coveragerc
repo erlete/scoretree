@@ -1,0 +1,17 @@
+[run]
+branch = True
+
+[paths]
+source =
+    src/scoretree
+
+[report]
+fail_under = 0
+omit =
+    __init__.py
+    */tests/*
+skip_empty = True
+
+[html]
+directory = htmlcov
+title = Scoretree Coverage Report
